@@ -9,7 +9,7 @@ git branch: 'main', credentialsId: '16e2fde9-9099-420e-b417-bca1f72b231e', url: 
 
 stage('Build'){
 steps{
-sh 'sudo docker build . -t sabarish24/demo_repo/nodo-todo-app-test:latest'
+sh 'sudo docker build -t sabarish24/demo_repo/nodo-todo-app-test:latest .'
  }
 }
 
