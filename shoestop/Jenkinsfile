@@ -12,6 +12,12 @@ steps{
 sh 'sudo docker build -t sabarish24/web-app-node:latest .'
  }
 }
+stage('Test image') {
+steps {
+echo 'testing…'
+sh 'sudo docker inspect - type=image ssabarish24/web-app-node:latest '
+ }
+}
 stage('Push'){
 steps{
 withCredentials([usernamePassword(credentialsId: '67663bde-396e-41a0-b049-dbb7da1c779b', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
@@ -20,14 +26,6 @@ sh 'sudo docker push sabarish24/web-app-node:latest'
 }
  }
 }
-stage('Test image') {
-steps {
-echo 'testing…'
- sudo 'docker pull sabarish24/demo_repo/nodo-todo-app-test:latest'
-sh 'sudo docker inspect - type=image ssabarish24/web-app-node:latest '
- }
-}
-
 stage('Deploy'){
 steps{
 echo 'deploying on another server'
