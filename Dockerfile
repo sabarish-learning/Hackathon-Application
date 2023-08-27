@@ -2,11 +2,13 @@ FROM node:latest
 
 MAINTAINER sabarishd
 
+WORKDIR /usr/src/app
+
 COPY  package*.json .
 
-RUN npm install --silent --progress=false
+RUN npm install 
 
-COPY shoestop/* .
+COPY . .
 
 EXPOSE 5000 
 
