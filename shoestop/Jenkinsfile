@@ -14,7 +14,7 @@ sh 'sudo docker build -t sabarish24/demo_repo/nodo-todo-app-test:latest .'
 }
 stage('Push'){
 steps{
-sh 'sudo docker login -u sabarish24 -p @Leokanguva24$'
+sh 'sudo docker login -u sabarish24 -p @Leokanguva24$ --password-stdin'
 sh 'sudo docker push sabarish24/demo_repo/nodo-todo-app-test:latest'
  }
 }
@@ -34,7 +34,7 @@ sh 'sudo docker rm nodetodoapp || true'
 sh 'sudo docker run -d - name nodetodoapp -p 80:80 sabarish24/demo_repo/nodo-todo-app-test:latest'
 sh '''
 ssh -i Instancekey01.pem -o StrictHostKeyChecking=no ubuntu@3.110.120.75 <<EOF
-sudo docker login -u sabarish24 -p @Leokanguva24$
+sudo docker login -u sabarish24 -p @Leokanguva24$ --password-stdin
 sudo docker pull sabarish24/demo_repo/nodo-todo-app-test:latest
 sudo docker stop nodetodoapp || true
 sudo docker rm nodetodoapp || true
