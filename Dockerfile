@@ -6,7 +6,7 @@ ENV HOME=/home/app
 
 RUN apt-get update && apt-get install htop
 
-COPY shoestop/package.json package-lock.json $HOME/node_docker/
+COPY  package.json package-lock.json $HOME/node_docker/
 
 WORKDIR $HOME/node_docker
 
