@@ -8,9 +8,6 @@ pipeline {
     environment {
         CI = 'true'
     }
-    stage('Checkout') {
-       git branch: 'lts-1.532', credentialsId: '6bff6f7a-4a95-4221-a05a-c07d07680c51', url: 'git@github.com:sabarish-learning/Hackathon-Application.git'
-   }
     stages {
         stage('Build') {
             steps {
