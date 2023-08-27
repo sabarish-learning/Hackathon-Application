@@ -16,6 +16,7 @@ sh 'sudo docker build -t sabarish24/demo_repo/nodo-todo-app-test:latest .'
 stage('Test image') {
 steps {
 echo 'testing…'
+ sudo 'docker pull sabarish24/demo_repo/nodo-todo-app-test:latest'
 sh 'sudo docker inspect - type=image sabarish24/demo_repo/nodo-todo-app-test:latest '
  }
 }
