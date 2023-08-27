@@ -1,6 +1,6 @@
 FROM node:latest
 
-MAINTAINER Sabarish 
+MAINTAINER maintainer="sabarishdevaraju@gmail.com" 
 
 RUN echo "Tryin to build my first application"
 
