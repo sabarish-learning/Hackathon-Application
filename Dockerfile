@@ -8,7 +8,7 @@ COPY . /var/www
 
 WORKDIR /var/www
 
-RUN npm install
+RUN npm install npm install express npm init -y
 
 EXPOSE 5000
 
