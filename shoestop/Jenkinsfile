@@ -1,31 +1,56 @@
 pipeline {
-    agent {
-        docker {
+agent { 
+    label 'Dev-Agent node'
+    docker {
             image 'node:6-alpine'
             args '-p 3000:3000'
         }
-    }
+}
     environment {
         CI = 'true'
     }
-   
-    stages {
-        stage('Build') {
-            steps {
-                sh 'npm install'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh './jenkins/scripts/test.sh'
-            }
-        }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
-            }
-        }
+stages{
+stage('Checkout'){
+steps{
+git url: 'https://github.com/sabarish-learning/Hackathon-Application.git', branch: 'main'
+ }
+}
+
+stage('Build'){
+steps{
+sh 'sudo docker build . -t sabarish24/demo_repo/nodo-todo-app-test:latest'
+ }
+}
+
+stage('Test image') {
+steps {
+echo 'testing…'
+sh 'sudo docker inspect - type=image sabarish24/demo_repo/nodo-todo-app-test:latest '
+ }
+}
+
+stage('Push'){
+steps{
+sh "sudo docker login -u sabarish24 -p @Leokanguva24$"
+sh 'sudo docker push sabarish24/demo_repo/nodo-todo-app-test:latest'
+ }
+}
+
+stage('Deploy'){
+steps{
+echo 'deploying on another server'
+sh 'sudo docker stop nodetodoapp || true'
+sh 'sudo docker rm nodetodoapp || true'
+sh 'sudo docker run -d - name nodetodoapp -p 80:80 sabarish24/demo_repo/nodo-todo-app-test:latest'
+sh '''
+ssh -i Instancekey01.pem -o StrictHostKeyChecking=no ubuntu@3.110.120.75 <<EOF
+sudo docker login -u sabarish24 -p @Leokanguva24$
+sudo docker pull sabarish24/demo_repo/nodo-todo-app-test:latest
+sudo docker stop nodetodoapp || true
+sudo docker rm nodetodoapp || true
+sudo docker run -d - name nodetodoapp -p 5000:5000 sabarish24/demo_repo/nodo-todo-app-test:latest
+'''
+     }
     }
+  }
 }
