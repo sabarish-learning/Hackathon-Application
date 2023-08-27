@@ -29,6 +29,7 @@ sh 'sudo docker push sabarish24/web-app-node:latest'
 stage('Deploy'){
 steps{
  withCredentials([sshUserPrivateKey(credentialsId: 'd87494ae-2037-4a4b-bcc1-120697f56d1b', keyFileVariable: 'keyfile', usernameVariable: 'username')]) {
+  withCredentials([usernamePassword(credentialsId: '67663bde-396e-41a0-b049-dbb7da1c779b', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
 echo 'deploying on another server'
 sh 'sudo docker stop nodetodoapp || true'
 sh 'sudo docker rm nodetodoapp || true'
@@ -41,6 +42,7 @@ sudo docker stop nodetodoapp || true
 sudo docker rm nodetodoapp || true
 sudo docker run -d --name nodetodoapp -p 5000:5000 sabarish24/web-app-node:latest
 '''
+  }
      }
     }
 }
