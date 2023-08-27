@@ -31,7 +31,7 @@ sh 'sudo docker inspect - type=image sabarish24/demo_repo/nodo-todo-app-test:lat
 
 stage('Push'){
 steps{
-sh "sudo docker login -u sabarish24 -p @Leokanguva24$"
+sh 'sudo docker login -u sabarish24 -p @Leokanguva24$'
 sh 'sudo docker push sabarish24/demo_repo/nodo-todo-app-test:latest'
  }
 }
