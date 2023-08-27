@@ -9,14 +9,14 @@ git branch: 'main', credentialsId: '16e2fde9-9099-420e-b417-bca1f72b231e', url: 
 
 stage('Build'){
 steps{
-sh 'sudo docker build -t sabarish24/demo_repo/nodo-todo-app-test:latest .'
+sh 'sudo docker build -t sabarish24/web-app-node:latest .'
  }
 }
 stage('Push'){
 steps{
 withCredentials([usernamePassword(credentialsId: '67663bde-396e-41a0-b049-dbb7da1c779b', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
 sh 'sudo docker login -u $dockerHubUser -p $dockerHubPassword'
-sh 'sudo docker push sabarish24/demo_repo/nodo-todo-app-test:latest'
+sh 'sudo docker push sabarish24/web-app-node:latest'
 }
  }
 }
@@ -24,7 +24,7 @@ stage('Test image') {
 steps {
 echo 'testing…'
  sudo 'docker pull sabarish24/demo_repo/nodo-todo-app-test:latest'
-sh 'sudo docker inspect - type=image sabarish24/demo_repo/nodo-todo-app-test:latest '
+sh 'sudo docker inspect - type=image ssabarish24/web-app-node:latest '
  }
 }
 
@@ -33,14 +33,14 @@ steps{
 echo 'deploying on another server'
 sh 'sudo docker stop nodetodoapp || true'
 sh 'sudo docker rm nodetodoapp || true'
-sh 'sudo docker run -d - name nodetodoapp -p 80:80 sabarish24/demo_repo/nodo-todo-app-test:latest'
+sh 'sudo docker run -d - name nodetodoapp -p 80:80 sabarish24/web-app-node:latest'
 sh '''
 ssh -i Instancekey01.pem -o StrictHostKeyChecking=no ubuntu@3.110.120.75 <<EOF
 sudo docker login -u $dockerHubUser -p $dockerHubPassword
-sudo docker pull sabarish24/demo_repo/nodo-todo-app-test:latest
+sudo docker pull sabarish24/web-app-node:latest
 sudo docker stop nodetodoapp || true
 sudo docker rm nodetodoapp || true
-sudo docker run -d - name nodetodoapp -p 5000:5000 sabarish24/demo_repo/nodo-todo-app-test:latest
+sudo docker run -d - name nodetodoapp -p 5000:5000 sabarish24/web-app-node:latest
 '''
      }
     }
