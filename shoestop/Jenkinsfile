@@ -3,7 +3,7 @@ agent { label 'Dev-Agent node' }
 stages{
 stage('Checkout'){
 steps{
-git url: 'https://github.com/sabarish-learning/Hackathon-Application.git', branch: 'main'
+git branch: 'main', credentialsId: '16e2fde9-9099-420e-b417-bca1f72b231e', url: 'https://github.com/sabarish-learning/Hackathon-Application.git'
  }
 }
 
