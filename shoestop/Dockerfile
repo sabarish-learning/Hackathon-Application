@@ -2,14 +2,19 @@ FROM node:latest
 
 MAINTAINER maintainer="sabarishdevaraju@gmail.com" 
 
-RUN echo "Tryin to build my first application"
+ENV HOME=/home/app
 
-COPY . /var/www
+RUN apt-get update && apt-get install htop
 
-WORKDIR /var/www
+COPY package.json package-lock.json $HOME/node_docker/
 
-RUN npm install
+WORKDIR $HOME/node_docker
 
-EXPOSE 5000
+RUN npm install --silent --progress=false
 
-ENTRYPOINT ["npm","start"]
+COPY . $HOME/node_docker
+
+EXPOSE 5000 
+
+CMD ["npm", "start"]
+
