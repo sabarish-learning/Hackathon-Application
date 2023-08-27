@@ -10,16 +10,6 @@ pipeline {
     }
    
     stages {
-        stage('Checkout') {
-    steps {
-                script {
-                     withCredentials([gitUsernamePassword(credentialsId: '6bff6f7a-4a95-4221-a05a-c07d07680c51', gitToolName: 'Default')]) {
-                    sh 'git fetch --all'
-                    }
-                }
-        
-            }
-          }
         stage('Build') {
             steps {
                 sh 'npm install'
