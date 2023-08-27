@@ -1,17 +1,13 @@
 FROM node:latest
 
-MAINTAINER maintainer="sabarishdevaraju@gmail.com" 
+MAINTAINER sabarishd
 
-ENV HOME=/home/app
-
-COPY  package.json package-lock.json $HOME/node_docker/
-
-WORKDIR $HOME/node_docker
+COPY  package*.json .
 
 RUN npm install --silent --progress=false
 
-COPY shoestop/* $HOME/node_docker
+COPY shoestop/* .
 
 EXPOSE 5000 
 
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
