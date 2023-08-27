@@ -14,8 +14,10 @@ sh 'sudo docker build -t sabarish24/demo_repo/nodo-todo-app-test:latest .'
 }
 stage('Push'){
 steps{
-sh 'sudo docker login -u sabarish24 --password-stdin @Leokanguva24$ '
+withCredentials([usernamePassword(credentialsId: '67663bde-396e-41a0-b049-dbb7da1c779b', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+sh 'sudo docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}'
 sh 'sudo docker push sabarish24/demo_repo/nodo-todo-app-test:latest'
+}
  }
 }
 stage('Test image') {
@@ -34,7 +36,7 @@ sh 'sudo docker rm nodetodoapp || true'
 sh 'sudo docker run -d - name nodetodoapp -p 80:80 sabarish24/demo_repo/nodo-todo-app-test:latest'
 sh '''
 ssh -i Instancekey01.pem -o StrictHostKeyChecking=no ubuntu@3.110.120.75 <<EOF
-sudo docker login -u sabarish24 --password-stdin @Leokanguva24$ 
+sudo docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}
 sudo docker pull sabarish24/demo_repo/nodo-todo-app-test:latest
 sudo docker stop nodetodoapp || true
 sudo docker rm nodetodoapp || true
