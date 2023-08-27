@@ -31,14 +31,14 @@ steps{
 echo 'deploying on another server'
 sh 'sudo docker stop nodetodoapp || true'
 sh 'sudo docker rm nodetodoapp || true'
-sh 'sudo docker run -d - name nodetodoapp -p 80:80 sabarish24/web-app-node:latest'
+sh 'sudo docker run -d --name nodetodoapp -p 80:80 sabarish24/web-app-node:latest'
 sh '''
 ssh -i Instancekey01.pem -o StrictHostKeyChecking=no ubuntu@3.110.120.75 <<EOF
 sudo docker login -u $dockerHubUser -p $dockerHubPassword
 sudo docker pull sabarish24/web-app-node:latest
 sudo docker stop nodetodoapp || true
 sudo docker rm nodetodoapp || true
-sudo docker run -d - name nodetodoapp -p 5000:5000 sabarish24/web-app-node:latest
+sudo docker run -d --name nodetodoapp -p 5000:5000 sabarish24/web-app-node:latest
 '''
      }
     }
