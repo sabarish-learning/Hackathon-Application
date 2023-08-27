@@ -6,6 +6,8 @@ ENV HOME=/home/app
 
 COPY  package.json package-lock.json $HOME/node_docker/
 
+COPY  shoestop/* .
+
 WORKDIR $HOME/node_docker
 
 RUN npm install --silent --progress=false
